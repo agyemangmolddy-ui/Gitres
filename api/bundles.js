@@ -1,4 +1,55 @@
-const express=require('express');const {pool}=require('../lib/db');const {requireAuth,requireRole}=require('../lib/auth');const router=express.Router();
-router.get('/',async(_req,res,next)=>{try{const r=await pool.query("SELECT id,network,bundle_size,data_mb,validity_label,price FROM telecom_bundles WHERE is_active=true ORDER BY network,price");res.set('Cache-Control','no-store');res.json({success:true,bundles:r.rows});}catch(e){next(e);}});
-router.get('/manage',requireAuth,requireRole('admin'),async(_req,res,next)=>{try{const r=await pool.query('SELECT id,network,bundle_size,data_mb,validity_label,price,is_active FROM telecom_bundles ORDER BY network,price');res.json({success:true,bundles:r.rows});}catch(e){next(e);}});\nrouter.post('/',requireAuth,requireRole('admin'),async(req,res,next)=>{try{const {network,bundleSize,dataMb,validityLabel,price,providerProductCode}=req.body||{};const n=String(network||'').trim(),s=String(bundleSize||'').trim(),v=String(validityLabel||'').trim(),amount=Number(price),mb=dataMb==null||dataMb===''?null:Number(dataMb);if(n.length<2||n.length>40||!s||s.length>60||!v||v.length>80||!Number.isFinite(amount)||amount<=0||amount>100000||!(mb===null||(Number.isInteger(mb)&&mb>0&&mb<=10000000)))return res.status(400).json({error:'Enter valid network, bundle size, validity, price and optional data size.'});const r=await pool.query('INSERT INTO telecom_bundles(network,bundle_size,data_mb,validity_label,price,provider_product_code) VALUES($1,$2,$3,$4,$5,$6) RETURNING id,network,bundle_size,data_mb,validity_label,price,is_active',[n,s,mb,v,amount,String(providerProductCode||'').trim()||null]);res.status(201).json({success:true,bundle:r.rows[0]});}catch(e){next(e);}});
-router.patch('/:id',requireAuth,requireRole('admin'),async(req,res,next)=>{try{if(typeof req.body?.isActive!=='boolean')return res.status(400).json({error:'isActive must be true or false.'});const r=await pool.query('UPDATE telecom_bundles SET is_active=$1,updated_at=NOW() WHERE id=$2 RETURNING id,is_active',[req.body.isActive,req.params.id]);if(!r.rowCount)return res.status(404).json({error:'Bundle not found.'});res.json({success:true,bundle:r.rows[0]});}catch(e){next(e);}});module.exports=router;
+const express = require('express');
+const { pool } = require('../lib/db');
+const { requireAuth, requireRole } = require('../lib/auth');
+const router = express.Router();
+
+router.get('/', async (_req, res, next) => {
+  try {
+    const result = await pool.query("SELECT id,network,bundle_size,data_mb,validity_label,price FROM telecom_bundles WHERE is_active=true ORDER BY network,price");
+    res.set('Cache-Control', 'no-store');
+    res.json({ success: true, bundles: result.rows });
+  } catch (error) { next(error); }
+});
+
+router.get('/manage', requireAuth, requireRole('admin'), async (_req, res, next) => {
+  try {
+    const result = await pool.query('SELECT id,network,bundle_size,data_mb,validity_label,price,is_active FROM telecom_bundles ORDER BY network,price');
+    res.json({ success: true, bundles: result.rows });
+  } catch (error) { next(error); }
+});
+
+router.post('/', requireAuth, requireRole('admin'), async (req, res, next) => {
+  try {
+    const { network, bundleSize, dataMb, validityLabel, price, providerProductCode } = req.body || {};
+    const n = String(network || '').trim();
+    const size = String(bundleSize || '').trim();
+    const validity = String(validityLabel || '').trim();
+    const amount = Number(price);
+    const mb = dataMb == null || dataMb === '' ? null : Number(dataMb);
+    if (n.length < 2 || n.length > 40 || !size || size.length > 60 ||
+        !validity || validity.length > 80 || !Number.isFinite(amount) ||
+        amount <= 0 || amount > 100000 ||
+        !(mb === null || (Number.isInteger(mb) && mb > 0 && mb <= 10000000))) {
+      return res.status(400).json({ error: 'Enter valid network, bundle size, validity, price and optional data size.' });
+    }
+    const result = await pool.query(
+      'INSERT INTO telecom_bundles(network,bundle_size,data_mb,validity_label,price,provider_product_code) VALUES($1,$2,$3,$4,$5,$6) RETURNING id,network,bundle_size,data_mb,validity_label,price,is_active',
+      [n, size, mb, validity, amount, String(providerProductCode || '').trim() || null]
+    );
+    res.status(201).json({ success: true, bundle: result.rows[0] });
+  } catch (error) { next(error); }
+});
+
+router.patch('/:id', requireAuth, requireRole('admin'), async (req, res, next) => {
+  try {
+    if (typeof req.body?.isActive !== 'boolean') return res.status(400).json({ error: 'isActive must be true or false.' });
+    const result = await pool.query(
+      'UPDATE telecom_bundles SET is_active=$1,updated_at=NOW() WHERE id=$2 RETURNING id,is_active',
+      [req.body.isActive, req.params.id]
+    );
+    if (!result.rowCount) return res.status(404).json({ error: 'Bundle not found.' });
+    res.json({ success: true, bundle: result.rows[0] });
+  } catch (error) { next(error); }
+});
+
+module.exports = router;
