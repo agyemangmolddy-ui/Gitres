@@ -14,7 +14,7 @@ app.use((req, _res, next) => {
   if (req.query && typeof req.query.path === 'string') {
     const extra = new URLSearchParams(req.query);
     extra.delete('path');
-    req.url = '/api/' + req.query.path.replace(/^\\/+/, '') + (extra.toString() ? '?' + extra.toString() : '');
+    req.url = '/api/' + String(req.query.path).split('/').filter(Boolean).join('/') + (extra.toString() ? '?' + extra.toString() : '');
   }
   next();
 });
