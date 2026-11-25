@@ -40,12 +40,12 @@ router.post('/', requireAuth, requireRole('seller', 'admin'), async (req, res, n
   try {
     const { title, description, category, price, coverage, recordsLabel, licenceSummary, sourceDescription, rightsConfirmed, privacyConfirmed } = req.body || {};
     const allowed = ['payments','banking','business','markets','mobility','economy','other'];
-    if (!title || title.trim().length < 4 || title.length > 120) return res.status(400).json({ error: 'Enter a dataset title between 4 and 120 characters.' });
-    if (!description || description.trim().length < 20 || description.length > 2000) return res.status(400).json({ error: 'Add a clear description of at least 20 characters.' });
+    if (typeof title !== 'string' || title.trim().length < 4 || title.length > 120) return res.status(400).json({ error: 'Enter a dataset title between 4 and 120 characters.' });
+    if (typeof description !== 'string' || description.trim().length < 20 || description.length > 2000) return res.status(400).json({ error: 'Add a clear description of at least 20 characters.' });
     if (!allowed.includes(category)) return res.status(400).json({ error: 'Choose a valid category.' });
     const amount = Number(price);
     if (!Number.isFinite(amount) || amount < 0 || amount > 10000000) return res.status(400).json({ error: 'Enter a valid price in GHS.' });
-    if (!sourceDescription || sourceDescription.trim().length < 10) return res.status(400).json({ error: 'Describe the data source and how it was collected.' });
+    if (typeof sourceDescription !== 'string' || sourceDescription.trim().length < 10) return res.status(400).json({ error: 'Describe the data source and how it was collected.' });
     if (rightsConfirmed !== true || privacyConfirmed !== true) return res.status(400).json({ error: 'Confirm your rights to share the data and that it contains no identifiable personal or financial records.' });
     const result = await pool.query(
       `INSERT INTO datasets (seller_id,title,description,category,price,currency,coverage,records_label,licence_summary,source_description,rights_confirmed,privacy_confirmed,status)
