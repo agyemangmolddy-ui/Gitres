@@ -3,10 +3,16 @@ CREATE TABLE IF NOT EXISTS users (
  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
  name VARCHAR(80) NOT NULL,
  email VARCHAR(254) NOT NULL UNIQUE,
- password_hash TEXT NOT NULL,
+ password_hash TEXT,
  role VARCHAR(16) NOT NULL DEFAULT 'buyer' CHECK (role IN ('buyer','seller','admin')),
+ google_sub TEXT,
  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+-- Upgrade databases created before Google sign-in was added.
+ALTER TABLE users ALTER COLUMN password_hash DROP NOT NULL;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS google_sub TEXT;
+CREATE UNIQUE INDEX IF NOT EXISTS users_google_sub_unique_idx ON users(google_sub) WHERE google_sub IS NOT NULL;
+
 CREATE TABLE IF NOT EXISTS telecom_bundles (
  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
  network VARCHAR(40) NOT NULL,
