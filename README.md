@@ -1,28 +1,49 @@
-# DataVault — Fintech Data Marketplace
+# DataVault — Responsible Fintech Data Marketplace
 
-A responsive fintech-inspired data marketplace demo built with HTML, CSS, vanilla JavaScript, Node.js and Express.
+DataVault is a responsive data marketplace built with HTML, CSS, JavaScript, Node.js, Express and Neon PostgreSQL.
 
-## Features
-- Responsive dashboard with dark mode
-- Dataset catalogue with search, category filters and sorting
-- Dataset detail modal and saved shortlist interactions
-- GHS pricing presentation
-- Express API endpoint at `/api/datasets`
-- Font Awesome icons
+## What's included
+- Public landing page with responsive design and Font Awesome icons
+- Live catalogue backed by Neon PostgreSQL (no seeded or mock dataset records)
+- Email/password registration and login with bcrypt password hashing
+- Signed, HTTP-only authentication cookie
+- Buyer and seller account roles
+- Seller dataset submission workflow with source, rights and privacy declarations
+- New submissions remain pending until an administrator approves them
+- Buyer purchase-request records (no payment is charged)
+- API rate limiting, security headers and parameterised SQL queries
 
-## Run locally
-1. Install Node.js 20 or later.
-2. Run `npm install`.
-3. Run `npm run dev`.
-4. Open `http://localhost:3000`.
+## Technology
+- HTML5, CSS3, vanilla JavaScript
+- Node.js 20+, Express
+- Neon PostgreSQL using the pg driver
+- bcryptjs, jsonwebtoken, cookie-parser, Helmet and express-rate-limit
+- Font Awesome 6
 
-## Important demo limitations
-This repository is a frontend and catalogue prototype. Dataset entries, coverage, update dates and prices are illustrative and do not represent live market data or verified vendors. The enquiry action is a mailto placeholder. There is no user authentication, checkout, payment processing, file delivery, seller onboarding or production database yet.
+## Setup
+1. Create a Neon project and copy its pooled connection string.
+2. Copy `.env.example` to `.env` and set `DATABASE_URL` and `JWT_SECRET`.
+3. Install dependencies: `npm install`.
+4. Create the tables: `npm run db:migrate`.
+5. Start the app: `npm run dev`.
+6. Open `http://localhost:3000`.
 
-Before handling real data or payments, add a reviewed data-provenance and licensing process, consent and privacy checks, role-based access, secure authentication, audit logs, payment-provider integration and legal review. Do not upload or sell identifiable personal or financial records without a lawful basis and appropriate safeguards. Never commit API keys or payment secrets.
+Never commit `.env` or publish your Neon connection string.
 
-## Stack
-- HTML5, CSS3, JavaScript
-- Node.js and Express
-- Font Awesome
-- Vercel-compatible API functions
+## Environment variables
+- `DATABASE_URL`: Neon pooled PostgreSQL connection string (required).
+- `JWT_SECRET`: long random secret (required).
+- `NODE_ENV`: set to `production` in deployment.
+- `ADMIN_EMAILS`: comma-separated email addresses allowed to review listings.
+- `PORT`: local server port (optional).
+
+## First admin
+Register using the email address you intend to administer, then set that exact address in `ADMIN_EMAILS` in the deployment environment. The API resolves the admin role from this server-side allow-list. Never expose this list in frontend code.
+
+## Data and payments
+The catalogue starts empty by design. No fictional listings, prices, traffic counts or marketplace statistics are seeded. Sellers submit listing metadata and attest to their right to share the dataset; an administrator must review each listing before publication.
+
+Purchase requests are recorded as pending enquiries only. No card, mobile-money or bank payment is taken, and no file is delivered. A production payment provider, signed download/storage service, seller verification, dispute process, legal review and stronger operational controls must be configured before real transactions. Do not upload or sell identifiable personal or financial records. Use only lawfully sourced, appropriately anonymised or aggregated data with clear permitted-use terms.
+
+## Deployment
+Connect this repository to Vercel and add `DATABASE_URL`, `JWT_SECRET`, `NODE_ENV=production` and `ADMIN_EMAILS` as encrypted environment variables. Run the database migration against Neon before first use. The Vercel API entry point is `api/index.js`.
