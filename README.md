@@ -40,6 +40,14 @@ Never commit `.env`, database credentials, OAuth client secrets, supplier API ke
 - `ADMIN_EMAILS`: comma-separated store administrator email allow-list.
 - `PORT`: optional local port.
 
+## Troubleshooting server errors
+Open `/api/health` on the deployed site. It returns a safe diagnostic code:
+- `DATABASE_URL_MISSING`: add the Neon connection string to the Vercel environment variables.
+- `DATABASE_UNAVAILABLE`: verify the Neon project is active and the connection string is correct; use the pooled connection string and include SSL mode as recommended by Neon.
+- `DATABASE_SCHEMA_MISSING` or `DATABASE_SCHEMA_OUTDATED`: run `npm run db:migrate` against the same Neon database used by the deployment.
+
+After changing Vercel environment variables, redeploy so the Functions receive the updated settings.
+
 ## API error response behaviour
 API errors are returned as JSON with an HTTP status and an `error` message. The frontend reads the response body as text first and parses JSON safely, so an HTML/plain-text platform error is shown as a useful message rather than a JSON parsing exception. Check the deployment function logs if the platform itself returns an error page.
 
