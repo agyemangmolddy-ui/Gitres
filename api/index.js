@@ -9,6 +9,8 @@ const { pool } = require('../lib/db');
 
 const app = express();
 app.disable('x-powered-by');
+// Vercel runs this app behind its proxy; trust the platform's forwarded client IP.
+app.set('trust proxy', 1);
 
 app.use((req, _res, next) => {
   if (req.query && typeof req.query.path === 'string') {
