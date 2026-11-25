@@ -17,7 +17,7 @@ router.post('/register', authLimiter, async (req, res, next) => {
     if (!['buyer','seller'].includes(requestedRole)) return res.status(400).json({ error: 'Invalid account type.' });
     const hash = await bcrypt.hash(password, 12);
     const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(x => x.trim().toLowerCase()).filter(Boolean);
-    const accountRole = adminEmails.includes(cleanEmail) ? 'admin' : role;
+    const accountRole = adminEmails.includes(cleanEmail) ? 'admin' : requestedRole;
     const result = await pool.query('INSERT INTO users (name,email,password_hash,role) VALUES ($1,$2,$3,$4) RETURNING id,name,email,role,created_at', [cleanName,cleanEmail,hash,accountRole]);
     const user = result.rows[0];
     setSessionCookie(res, signSession(user));
