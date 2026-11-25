@@ -1,6 +1,6 @@
 {
   "name": "datavault-ghana-data-bundles",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "description": "Ghana mobile data bundle store powered by Neon PostgreSQL",
   "main": "server.js",
@@ -14,6 +14,7 @@
     "cookie-parser": "^1.4.7",
     "express": "^4.21.2",
     "express-rate-limit": "^7.5.0",
+    "google-auth-library": "^9.15.1",
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.13.1",
