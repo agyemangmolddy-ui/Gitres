@@ -22,6 +22,13 @@ router.get('/', async (req, res, next) => {
   } catch (error) { next(error); }
 });
 
+router.get('/mine', requireAuth, requireRole('seller', 'admin'), async (req, res, next) => {
+  try {
+    const result = await pool.query('SELECT id,title,category,price,currency,status,created_at FROM datasets WHERE seller_id=$1 ORDER BY created_at DESC LIMIT 100', [req.user.id]);
+    res.json({ success: true, datasets: result.rows });
+  } catch (error) { next(error); }
+});
+
 router.post('/', requireAuth, requireRole('seller', 'admin'), async (req, res, next) => {
   try {
     const { title, description, category, price, coverage, recordsLabel, licenceSummary, sourceDescription, rightsConfirmed, privacyConfirmed } = req.body || {};
