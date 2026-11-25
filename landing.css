@@ -7,3 +7,66 @@
 .auth-divider:before,.auth-divider:after{content:"";height:1px;background:#e8edf4;flex:1}
 .google-message{min-height:15px;margin:8px 0 0;text-align:center;color:#d34b5b;font-size:10px;line-height:1.5}
 @media(max-width:520px){.auth-card{padding:25px 20px}.google-button-host{min-height:40px}}
+
+
+/* DataVault visual refresh — responsive, high-contrast fintech storefront */
+:root{--ink:#10213b;--muted:#71819a;--blue:#3975ef;--navy:#071426;--line:#e7edf6;--paper:#f5f8fd}
+body{font-family:"DM Sans",sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+.site-header{height:76px;padding-inline:clamp(20px,6.5vw,108px);background:rgba(255,255,255,.92);border-bottom:1px solid rgba(225,233,245,.8)}
+.brand{font-size:22px;letter-spacing:-1.2px}
+.brand-mark{width:38px;height:38px;border-radius:13px}
+.desktop-nav{gap:clamp(18px,3vw,42px);font-size:13px}
+.header-actions{gap:24px}
+.button{border-radius:12px;padding:15px 21px;font-size:13px;box-shadow:0 10px 24px rgba(57,117,239,.22)}
+.button:hover{box-shadow:0 14px 28px rgba(57,117,239,.3)}
+.hero{min-height:650px;padding:clamp(70px,8vw,112px) clamp(24px,8vw,132px);gap:5vw;background:radial-gradient(ellipse at 80% 20%,#153b76 0%,transparent 36%),linear-gradient(125deg,#061326 0%,#0b1d37 56%,#102b51 100%)}
+.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 49.9%,rgba(255,255,255,.035) 50%,transparent 50.1%);pointer-events:none}
+.hero-glow{background:#3476e82b;filter:blur(100px)}
+.hero-copy{max-width:620px}
+.hero h1{font-size:clamp(46px,5.4vw,72px);line-height:1.04;letter-spacing:-3.8px}
+.hero-lede{font-size:16px;line-height:1.85;max-width:520px;color:#b6c5d9}
+.hero-actions{margin:32px 0 38px}
+.trust-line{font-size:11px;gap:22px}
+.hero-visual{min-height:420px}
+.card-main{width:min(430px,92%);padding:30px;border-radius:23px;box-shadow:0 35px 90px #0006}
+.visual-title{font-size:28px;margin-top:27px}
+.network-pills{gap:10px;margin:25px 0 14px}
+.network-pills span{padding:12px 19px;border-radius:10px}
+.card-float{border-radius:14px;box-shadow:0 18px 45px #0003}
+.proof-strip{padding:30px clamp(24px,8vw,132px);background:#fff;gap:0}
+.proof-strip div{padding:4px 24px;border-right:1px solid #e9eef5}
+.proof-strip strong{font-size:13px}
+.proof-strip span{font-size:10px}
+.section{padding:clamp(68px,8vw,104px) clamp(22px,8vw,132px)}
+.section h2,.trust-copy h2,.cta-section h2{font-size:clamp(29px,3.5vw,43px);letter-spacing:-1.8px}
+.section-head{margin-bottom:36px}
+.section-head p,.cta-section p{font-size:13px;line-height:1.8}
+.preview-grid{gap:18px}
+.preview-card{padding:25px;border-radius:17px;box-shadow:0 12px 34px rgba(16,33,59,.045);transition:transform .2s,box-shadow .2s,border-color .2s}
+.preview-card:hover{transform:translateY(-4px);box-shadow:0 20px 42px rgba(16,33,59,.09);border-color:#cbdaf4}
+.preview-card-icon{width:44px;height:44px;border-radius:13px;font-size:16px}
+.preview-card h3{font-size:17px}
+.preview-card p{font-size:12px}
+.preview-meta{font-size:10px}
+.catalogue-empty{border-radius:17px;padding:52px 22px}
+.how-section{background:linear-gradient(180deg,#f5f8fd,#f9fbfe)}
+.step-card{border-radius:17px;padding:29px;box-shadow:0 10px 28px #10213b08}
+.step-icon{width:48px;height:48px;border-radius:14px}
+.step-card h3{font-size:17px}
+.step-card p{font-size:12px}
+.trust-section{padding:clamp(65px,8vw,100px) clamp(24px,10vw,155px);background:radial-gradient(ellipse at 15% 50%,#14345f 0%,transparent 42%),#071426}
+.trust-copy p{font-size:13px}
+.trust-copy ul{font-size:12px;gap:15px}
+.cta-section{padding:70px clamp(24px,8vw,132px);background:#f5f8fd}
+.cta-section h2{margin-bottom:10px}
+.site-footer{padding:26px clamp(20px,6.5vw,108px);background:#fff}
+.auth-layout{gap:clamp(28px,7vw,100px);padding-inline:clamp(22px,8vw,130px)}
+.auth-aside{border-radius:24px;background:radial-gradient(circle at 90% 10%,#1c467e,transparent 42%),linear-gradient(145deg,#071426,#102b50);padding:clamp(32px,5vw,60px);box-shadow:0 25px 70px #07142620}
+.auth-card{border-radius:22px;padding:clamp(24px,3.2vw,38px);box-shadow:0 20px 60px rgba(16,33,59,.07)}
+.auth-heading h2{font-size:28px}
+.field-group input,.field-group select{height:48px;border-radius:11px;font-size:12px}
+.auth-tab{border-radius:9px;padding:12px}
+.auth-submit{height:48px}
+.google-button-host{min-height:44px}
+@media(max-width:900px){.hero{padding:76px 6vw 60px}.proof-strip{padding-inline:5vw}.proof-strip div{padding:4px 16px}.section{padding-inline:5vw}.trust-section{padding-inline:6vw}}
+@media(max-width:650px){.site-header{height:68px;padding-inline:18px}.hero{padding:62px 22px 44px;min-height:auto}.hero h1{font-size:44px;letter-spacing:-2.6px}.hero-lede{font-size:13px}.hero-visual{min-height:310px}.card-main{padding:22px}.proof-strip{padding:22px;gap:17px 8px}.proof-strip div{padding-left:9px}.section{padding:62px 21px}.preview-grid,.steps-grid{gap:12px}.preview-card{padding:22px}.trust-section{padding:55px 23px}.cta-section{padding:50px 22px}.site-footer{padding:22px}.auth-layout{padding:84px 16px 24px;gap:16px}.auth-aside{padding:25px}.auth-card{padding:25px 20px}}
