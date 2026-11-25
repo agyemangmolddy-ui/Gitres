@@ -1,0 +1,17 @@
+{
+  "name": "datavault-fintech-marketplace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A responsive fintech data marketplace demo",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
