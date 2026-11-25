@@ -15,7 +15,9 @@ router.post('/register', authLimiter, async (req, res, next) => {
     if (typeof password !== 'string' || password.length < 10 || password.length > 72) return res.status(400).json({ error: 'Use a password between 10 and 72 characters.' });
     if (!['buyer','seller'].includes(role)) return res.status(400).json({ error: 'Choose a buyer or seller account.' });
     const hash = await bcrypt.hash(password, 12);
-    const result = await pool.query('INSERT INTO users (name,email,password_hash,role) VALUES ($1,$2,$3,$4) RETURNING id,name,email,role,created_at', [cleanName,cleanEmail,hash,role]);
+    const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(x => x.trim().toLowerCase()).filter(Boolean);
+    const accountRole = adminEmails.includes(cleanEmail) ? 'admin' : role;
+    const result = await pool.query('INSERT INTO users (name,email,password_hash,role) VALUES ($1,$2,$3,$4) RETURNING id,name,email,role,created_at', [cleanName,cleanEmail,hash,accountRole]);
     const user = result.rows[0];
     setSessionCookie(res, signSession(user));
     res.status(201).json({ success: true, user });
