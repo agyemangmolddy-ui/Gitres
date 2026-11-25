@@ -13,7 +13,8 @@ router.post('/register', authLimiter, async (req, res, next) => {
     if (cleanName.length < 2 || cleanName.length > 80) return res.status(400).json({ error: 'Enter your name (2–80 characters).' });
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail) || cleanEmail.length > 254) return res.status(400).json({ error: 'Enter a valid email address.' });
     if (typeof password !== 'string' || password.length < 10 || password.length > 72) return res.status(400).json({ error: 'Use a password between 10 and 72 characters.' });
-    if (!['buyer','seller'].includes(role)) return res.status(400).json({ error: 'Choose a buyer or seller account.' });
+    const requestedRole = role || 'buyer';
+    if (!['buyer','seller'].includes(requestedRole)) return res.status(400).json({ error: 'Invalid account type.' });
     const hash = await bcrypt.hash(password, 12);
     const adminEmails = (process.env.ADMIN_EMAILS || '').split(',').map(x => x.trim().toLowerCase()).filter(Boolean);
     const accountRole = adminEmails.includes(cleanEmail) ? 'admin' : role;
