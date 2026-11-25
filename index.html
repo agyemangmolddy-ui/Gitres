@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="A trusted marketplace for quality datasets and fintech intelligence.">
+  <meta name="theme-color" content="#071426">
+  <title>DataVault — The data marketplace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#"><span class="brand-mark"><i class="fa-solid fa-layer-group"></i></span><span>data<span class="brand-light">vault</span></span></a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="side-nav">
+        <a class="nav-link active" href="#overview"><i class="fa-solid fa-grid-2"></i> Overview</a>
+        <a class="nav-link" href="#marketplace"><i class="fa-solid fa-store"></i> Marketplace <span class="nav-count">12</span></a>
+        <a class="nav-link" href="#orders"><i class="fa-solid fa-bag-shopping"></i> My purchases</a>
+        <a class="nav-link" href="#saved"><i class="fa-regular fa-bookmark"></i> Saved datasets</a>
+      </nav>
+      <div class="workspace-label tools-label">TOOLS</div>
+      <nav class="side-nav">
+        <a class="nav-link" href="#analytics"><i class="fa-solid fa-chart-line"></i> Analytics</a>
+        <a class="nav-link" href="#sell"><i class="fa-solid fa-cloud-arrow-up"></i> Sell your data</a>
+        <a class="nav-link" href="#settings"><i class="fa-solid fa-gear"></i> Settings</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card"><span class="help-icon"><i class="fa-regular fa-circle-question"></i></span><strong>Need a hand?</strong><p>Explore our guide to buying and licensing datasets.</p><a href="#how-it-works">Visit help centre <i class="fa-solid fa-arrow-right"></i></a></div>
+        <div class="profile-row"><div class="avatar">DV</div><div><strong>Demo workspace</strong><small>Free preview account</small></div><i class="fa-solid fa-ellipsis"></i></div>
+      </div>
+    </aside>
+    <main class="main-content" id="overview">
+      <header class="topbar"><button class="icon-btn mobile-menu" id="menuToggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button><div class="breadcrumb">Workspace <i class="fa-solid fa-chevron-right"></i> <strong>Overview</strong></div><div class="top-actions"><span class="secure-label"><i class="fa-solid fa-shield-halved"></i> Secure marketplace</span><button class="icon-btn" id="themeToggle" aria-label="Toggle theme"><i class="fa-regular fa-moon"></i></button><button class="icon-btn notification" aria-label="Notifications"><i class="fa-regular fa-bell"></i><b></b></button><div class="top-avatar">DV</div></div></header>
+      <section class="welcome-row"><div><div class="eyebrow"><span class="live-dot"></span> YOUR DATA WORKSPACE</div><h1>Discover data. <span>Make better moves.</span></h1><p class="subheading">Find reliable datasets and insights to power your next decision.</p></div><a class="primary-btn" href="#marketplace"><i class="fa-solid fa-magnifying-glass"></i> Explore marketplace</a></section>
+      <section class="stats-grid" id="analytics">
+        <article class="stat-card"><div class="stat-top"><span>Datasets available</span><span class="stat-icon blue"><i class="fa-solid fa-database"></i></span></div><div class="stat-value" id="datasetCount">—</div><div class="stat-foot"><span class="positive"><i class="fa-solid fa-arrow-trend-up"></i> Curated collection</span><span>Across 6 categories</span></div></article>
+        <article class="stat-card"><div class="stat-top"><span>Categories</span><span class="stat-icon purple"><i class="fa-solid fa-shapes"></i></span></div><div class="stat-value">06</div><div class="stat-foot"><span>Finance to mobility</span><span>Explore all</span></div></article>
+        <article class="stat-card"><div class="stat-top"><span>Starting price</span><span class="stat-icon green"><i class="fa-solid fa-coins"></i></span></div><div class="stat-value">GH₵ 80</div><div class="stat-foot"><span class="positive">Transparent pricing</span><span>Per dataset licence</span></div></article>
+        <article class="stat-card"><div class="stat-top"><span>Trust standard</span><span class="stat-icon orange"><i class="fa-solid fa-shield"></i></span></div><div class="stat-value">Verified</div><div class="stat-foot"><span class="positive"><i class="fa-solid fa-check"></i> Quality reviewed</span><span>Sample marketplace</span></div></article>
+      </section>
+      <section class="market-section" id="marketplace">
+        <div class="section-heading"><div><div class="eyebrow">THE MARKETPLACE</div><h2>Find your next dataset</h2><p>Explore sample, anonymised datasets with clear licence information.</p></div><a class="text-link" href="#all-datasets">Browse all <i class="fa-solid fa-arrow-right"></i></a></div>
+        <div class="market-toolbar"><label class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input id="searchInput" type="search" placeholder="Search datasets, industries, keywords..." aria-label="Search datasets"><kbd>⌘ K</kbd></label><div class="filter-wrap"><i class="fa-solid fa-sliders"></i><select id="categoryFilter" aria-label="Filter by category"><option value="all">All categories</option><option value="payments">Payments</option><option value="banking">Banking</option><option value="business">Business</option><option value="markets">Markets</option><option value="mobility">Mobility</option><option value="economy">Economy</option></select></div><select id="sortFilter" class="sort-select" aria-label="Sort datasets"><option value="featured">Sort: Featured</option><option value="price-low">Price: Low to high</option><option value="price-high">Price: High to low</option><option value="name">Name: A to Z</option></select></div>
+        <div class="category-chips" id="categoryChips"><button class="chip active" data-category="all">All data</button><button class="chip" data-category="payments">Payments</button><button class="chip" data-category="banking">Banking</button><button class="chip" data-category="business">Business</button><button class="chip" data-category="markets">Markets</button><button class="chip" data-category="economy">Economy</button></div>
+        <div class="dataset-grid" id="datasetGrid"><div class="loading-state"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading curated datasets...</div></div>
+        <div class="empty-state hidden" id="emptyState"><i class="fa-solid fa-box-open"></i><strong>No datasets found</strong><span>Try another search or category.</span></div>
+      </section>
+      <section class="bottom-grid" id="how-it-works">
+        <article class="feature-panel"><div class="feature-copy"><div class="eyebrow">BUILT FOR CONFIDENCE</div><h2>Good data starts with trust.</h2><p>Understand what you are buying before you buy. Every listing should explain its source, coverage, update frequency and permitted use.</p><a href="#trust" class="text-link">Our data standards <i class="fa-solid fa-arrow-right"></i></a></div><div class="feature-art"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="shield-graphic"><i class="fa-solid fa-shield-halved"></i><span><i class="fa-solid fa-check"></i></span></div><div class="float-tag tag-one"><i class="fa-solid fa-lock"></i> Privacy first</div><div class="float-tag tag-two"><i class="fa-solid fa-circle-check"></i> Quality checked</div></div></article>
+        <article class="sell-panel" id="sell"><div class="sell-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div><div class="eyebrow">FOR DATA PROVIDERS</div><h2>Have data worth sharing?</h2><p>List responsibly sourced, anonymised datasets and reach teams looking for better insights.</p><a href="mailto:hello@datavault.example?subject=Data%20provider%20enquiry" class="secondary-btn">Become a data provider <i class="fa-solid fa-arrow-right"></i></a></article>
+      </section>
+      <footer><a class="brand footer-brand" href="#"><span class="brand-mark"><i class="fa-solid fa-layer-group"></i></span><span>data<span class="brand-light">vault</span></span></a><span>© 2026 DataVault. Demo marketplace experience.</span><div><a href="#trust" id="trust">Privacy</a><a href="#trust">Terms</a><a href="mailto:hello@datavault.example">Contact</a></div></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="modal-backdrop hidden" id="datasetModal"><section class="dataset-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="modal-close icon-btn" id="modalClose" aria-label="Close"><i class="fa-solid fa-xmark"></i></button><div id="modalContent"></div></section></div>
+  <script src="/app.js" defer></script>
+</body></html>
