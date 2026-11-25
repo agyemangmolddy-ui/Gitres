@@ -9,6 +9,15 @@ const { pool } = require('../lib/db');
 
 const app = express();
 app.disable('x-powered-by');
+// Vercel rewrites /api/* to this function and passes the original route in ?path=.
+app.use((req, _res, next) => {
+  if (req.query && typeof req.query.path === 'string') {
+    const extra = new URLSearchParams(req.query);
+    extra.delete('path');
+    req.url = '/api/' + req.query.path.replace(/^\\/+/, '') + (extra.toString() ? '?' + extra.toString() : '');
+  }
+  next();
+});
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 app.use(express.json({ limit: '32kb' }));
 app.use(cookieParser());
