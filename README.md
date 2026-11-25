@@ -1,49 +1,52 @@
-# DataVault — Responsible Fintech Data Marketplace
+# DataVault — Ghana mobile data bundle store
 
-DataVault is a responsive data marketplace built with HTML, CSS, JavaScript, Node.js, Express and Neon PostgreSQL.
+DataVault is a mobile data bundle ordering website for Ghana. Customers can browse available MTN, Telecel, AT and other configured network packages, choose a bundle, enter a recipient mobile number and track an order.
 
 ## What's included
-- Public landing page with responsive design and Font Awesome icons
-- Live catalogue backed by Neon PostgreSQL (no seeded or mock dataset records)
-- Email/password registration and login with bcrypt password hashing
-- Signed, HTTP-only authentication cookie
-- Buyer and seller account roles
-- Seller dataset submission workflow with source, rights and privacy declarations
-- New submissions remain pending until an administrator approves them
-- Buyer purchase-request records (no payment is charged)
-- API rate limiting, security headers and parameterised SQL queries
+- Responsive fintech-style landing page and customer dashboard
+- Live bundle catalogue read from Neon PostgreSQL — no seeded demo plans or fake prices
+- Customer registration and login with bcrypt password hashing and signed HTTP-only session cookies
+- Admin-only bundle plan creation and activation/deactivation
+- Ghana mobile number validation for bundle orders
+- Customer order history
+- Admin order queue and fulfilment status management
+- Express API security headers, rate limiting and parameterised SQL
 
 ## Technology
-- HTML5, CSS3, vanilla JavaScript
-- Node.js 20+, Express
+- HTML5, CSS3, vanilla JavaScript and Font Awesome 6
+- Node.js 20+ and Express
 - Neon PostgreSQL using the pg driver
 - bcryptjs, jsonwebtoken, cookie-parser, Helmet and express-rate-limit
-- Font Awesome 6
 
-## Setup
-1. Create a Neon project and copy its pooled connection string.
-2. Copy `.env.example` to `.env` and set `DATABASE_URL` and `JWT_SECRET`.
-3. Install dependencies: `npm install`.
-4. Create the tables: `npm run db:migrate`.
-5. Start the app: `npm run dev`.
-6. Open `http://localhost:3000`.
+## Local setup
+1. Create a Neon project and copy its pooled PostgreSQL connection string.
+2. Copy `.env.example` to `.env`; set `DATABASE_URL` and a strong `JWT_SECRET`.
+3. Set `ADMIN_EMAILS` to the email address(es) that should have store administrator access.
+4. Install packages with `npm install`.
+5. Run `npm run db:migrate` to create the mobile bundle tables.
+6. Run `npm run dev` and open `http://localhost:3000`.
 
-Never commit `.env` or publish your Neon connection string.
+Never commit `.env`, database credentials, supplier API keys or payment secrets.
 
 ## Environment variables
-- `DATABASE_URL`: Neon pooled PostgreSQL connection string (required).
-- `JWT_SECRET`: long random secret (required).
+- `DATABASE_URL`: Neon pooled connection string.
+- `JWT_SECRET`: long random secret for signed sessions.
 - `NODE_ENV`: set to `production` in deployment.
-- `ADMIN_EMAILS`: comma-separated email addresses allowed to review listings.
-- `PORT`: local server port (optional).
+- `ADMIN_EMAILS`: comma-separated store administrator email allow-list.
+- `PORT`: optional local port.
 
-## First admin
-Register using the email address you intend to administer, then set that exact address in `ADMIN_EMAILS` in the deployment environment. The API resolves the admin role from this server-side allow-list. Never expose this list in frontend code.
+## Important: live selling requirements
+The bundle catalogue starts empty. An administrator must add the actual package names, validity periods and retail prices from the chosen data wholesaler. The site does not invent MTN, Telecel or AT prices.
 
-## Data and payments
-The catalogue starts empty by design. No fictional listings, prices, traffic counts or marketplace statistics are seeded. Sellers submit listing metadata and attest to their right to share the dataset; an administrator must review each listing before publication.
+**The current order flow records orders only. It does not charge customers or automatically deliver mobile data.** Before accepting real customer payments, configure:
+1. A legitimate Ghana data wholesaler/aggregator that supports the networks you want to resell and provides a documented API for checking products, pricing and fulfilment.
+2. A payment provider that supports your preferred Ghana payment methods, such as Mobile Money and/or cards.
+3. Server-side payment verification (never trust a browser success redirect), idempotent order processing, supplier API credentials stored as encrypted environment variables, webhook verification, transaction reconciliation, retries and customer support/refund handling.
 
-Purchase requests are recorded as pending enquiries only. No card, mobile-money or bank payment is taken, and no file is delivered. The current seller form submits listing metadata only; binary dataset uploads are not enabled until a private object-storage provider and access controls are configured. A production payment provider, signed download/storage service, seller verification, dispute process, legal review and stronger operational controls must be configured before real transactions. Do not upload or sell identifiable personal or financial records. Use only lawfully sourced, appropriately anonymised or aggregated data with clear permitted-use terms.
+The current admin status controls are for order operations and manual testing only. Do not mark orders paid or fulfilled unless payment and delivery have actually been confirmed. The supplier product code field stores the supplier's plan identifier but is not itself an integration.
 
 ## Deployment
-Connect this repository to Vercel and add `DATABASE_URL`, `JWT_SECRET`, `NODE_ENV=production` and `ADMIN_EMAILS` as encrypted environment variables. Run the database migration against Neon before first use. The Vercel API entry point is `api/index.js`.
+Connect the repository to Vercel and configure `DATABASE_URL`, `JWT_SECRET`, `NODE_ENV=production` and `ADMIN_EMAILS` as encrypted environment variables. Run `npm run db:migrate` against Neon before launch. API routes are served from `api/index.js`.
+
+## Network trademarks
+MTN, Telecel and AT are referenced only to identify the mobile networks customers may select. DataVault is an independent reseller concept and should only advertise packages it is authorised to resell.
