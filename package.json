@@ -1,8 +1,8 @@
 {
-  "name": "datavault-fintech-marketplace",
+  "name": "datavault-ghana-data-bundles",
   "version": "2.0.0",
   "private": true,
-  "description": "A responsible fintech data marketplace powered by Neon PostgreSQL",
+  "description": "Ghana mobile data bundle store powered by Neon PostgreSQL",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
